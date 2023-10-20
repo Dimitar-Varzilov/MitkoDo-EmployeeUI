@@ -51,3 +51,8 @@ export interface ICustomError<T> {
   }
   status: HttpStatusCode
 }
+
+export interface IUser {
+  email: string
+  userId: UUID
+}
