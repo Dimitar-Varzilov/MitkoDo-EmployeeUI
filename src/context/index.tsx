@@ -37,7 +37,7 @@ export const defaultState: AppContextType = {
   fetchEmployeeData: async () => Promise.resolve(),
   fetchEmployeeTasks: async () => Promise.resolve(),
   isLoading: false,
-  isLoggedIn: document.cookie.length > 0,
+  isLoggedIn: getToken() !== null,
   loginUser: () => {},
   logOut: () => {},
   registerUser: () => {},
