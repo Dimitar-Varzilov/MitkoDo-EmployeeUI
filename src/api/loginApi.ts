@@ -1,32 +1,55 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import ky from 'ky'
+import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
+import axios from 'axios'
 
-import type { LoginDto } from '../interfaces'
-import { setToken } from '../utilities'
+import type { IUser, LoginDto, RegisterDto } from '../interfaces'
+import { getToken, setToken } from '../utilities'
 
 import { URLs } from './types'
+
 // Define a service using a base URL and expected endpoints
+const baseQuery = fetchBaseQuery({
+  baseUrl: URLs.AUTH,
+  prepareHeaders: (headers) => {
+    const token = getToken()
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`)
+    }
+    return headers
+  },
+})
+
+const baseQueryWithRetry = retry(baseQuery, { maxRetries: 6 })
+
 export const loginApi = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl: URLs.AUTH,
-    fetchFn: async (...args) => ky(...args),
-  }),
+  baseQuery: baseQueryWithRetry,
+
   endpoints: (builder) => ({
     loginUser: builder.mutation<string, LoginDto>({
+      queryFn: async (dto) => {
+        try {
+          const data = await axios.post<LoginDto, string, LoginDto>(
+            `${URLs.AUTH}/login`,
+            dto,
+          )
+          setToken(data)
+          return { data }
+        } catch (error: any) {
+          return { error }
+        }
+      },
+    }),
+    registerUser: builder.mutation<IUser, RegisterDto>({
       query: (dto) => ({
         body: dto,
         method: 'POST',
-        url: '/login',
+        url: '/register/employee',
       }),
-      transformResponse: (response: string) => {
-        setToken(response)
-        return response
-      },
     }),
   }),
   reducerPath: 'loginApi',
+  tagTypes: [],
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useLoginUserMutation } = loginApi
+export const { useLoginUserMutation, useRegisterUserMutation } = loginApi

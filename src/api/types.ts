@@ -3,3 +3,7 @@ export enum URLs {
   EMPLOYEE = 'https://localhost:5001/Employee',
   TASK = 'https://localhost:5002/Task',
 }
+
+export enum TAGTYPES {
+
+}

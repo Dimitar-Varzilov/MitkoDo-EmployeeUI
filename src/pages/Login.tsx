@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   useState,
   type FC,
@@ -6,12 +7,13 @@ import {
 } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppContext } from '../context'
+import { useLoginUserMutation } from '../api/loginApi'
+import type { LoginDto } from '../interfaces'
 
 const Login: FC = () => {
-  const { loginUser } = useAppContext()
+  const [loginUser] = useLoginUserMutation()
   const navigate = useNavigate()
-  const [state, setState] = useState({
+  const [state, setState] = useState<LoginDto>({
     email: '',
     password: '',
   })
@@ -21,7 +23,8 @@ const Login: FC = () => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    loginUser({ ...state })
+    loginUser(state)
+
     navigate('/main')
   }
   return (

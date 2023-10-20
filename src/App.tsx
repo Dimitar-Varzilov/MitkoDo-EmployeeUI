@@ -1,4 +1,5 @@
 import React from 'react'
+import { Provider as ReduxStoreProvider } from 'react-redux'
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 
 import AppProvider from './context'
@@ -9,24 +10,27 @@ import Register from './pages/Register'
 import Subtask from './pages/Subtask'
 import Todo from './pages/Todo'
 import Wrapper from './pages/Wrapper'
+import { store } from './store'
 // import './index.css'
 
 const App: React.FC = () => {
   return (
     <AppProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route index path="/" Component={Home} />
-          <Route path="/login" Component={Login} />
-          <Route path="/register" Component={Register} />
-          <Route element={<Wrapper />}>
-            <Route path="/main" Component={Main} />
-            <Route path="/todo/:todoId" Component={Todo} />
-            <Route path="/subtask/:subTaskId" Component={Subtask} />
-          </Route>
-          <Route path={'*'} element={<p>Page not found</p>} />
-        </Routes>
-      </BrowserRouter>
+      <ReduxStoreProvider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route index path="/" Component={Home} />
+            <Route path="/login" Component={Login} />
+            <Route path="/register" Component={Register} />
+            <Route element={<Wrapper />}>
+              <Route path="/main" Component={Main} />
+              <Route path="/todo/:todoId" Component={Todo} />
+              <Route path="/subtask/:subTaskId" Component={Subtask} />
+            </Route>
+            <Route path={'*'} element={<p>Page not found</p>} />
+          </Routes>
+        </BrowserRouter>
+      </ReduxStoreProvider>
     </AppProvider>
   )
 }
