@@ -1,4 +1,4 @@
-import { useEffect, type FC } from 'react'
+import React, { useEffect, type FC } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 import Spinner from '../components/Spinner'
@@ -17,14 +17,14 @@ const Wrapper: FC = () => {
     navigate('/')
   }
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/')
-    }
-  }, [isLoggedIn])
+  // useEffect(() => {
+  //   if (!isLoggedIn) {
+  //     navigate('/')
+  //   }
+  // }, [isLoggedIn])
 
   if (isLoading) return <Spinner />
-  if (error) return <p>{error.message}</p>
+  // if (error) return <p>{error.errors}</p>
   return (
     <>
       {isLoggedIn && (

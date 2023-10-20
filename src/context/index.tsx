@@ -102,7 +102,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     removeToken()
     setState(defaultState)
   }
-  const tokenHeader = `Bearer ${state.token}`
+  const tokenHeader = `Bearer ${getToken()}`
 
   const fetchEmployeeData = async () => {
     try {
