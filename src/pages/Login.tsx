@@ -7,7 +7,7 @@ import {
 } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useLoginUserMutation } from '../api/loginApi'
+import { useLoginUserMutation } from '../api/auth/loginApi'
 import type { LoginDto } from '../interfaces'
 
 const Login: FC = () => {

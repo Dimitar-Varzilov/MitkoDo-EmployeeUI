@@ -17,14 +17,14 @@ const Wrapper: FC = () => {
     navigate('/')
   }
 
-  // useEffect(() => {
-  //   if (!isLoggedIn) {
-  //     navigate('/')
-  //   }
-  // }, [isLoggedIn])
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/')
+    }
+  }, [isLoggedIn])
 
   if (isLoading) return <Spinner />
-  // if (error) return <p>{error.errors}</p>
+  if (error) return <p>{error.title}</p>
   return (
     <>
       {isLoggedIn && (

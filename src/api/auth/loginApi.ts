@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 import axios from 'axios'
 
-import type { IUser, LoginDto, RegisterDto } from '../interfaces'
-import { getToken, setToken } from '../utilities'
+import type { IUser, LoginDto, RegisterDto } from '../../interfaces'
+import { getToken, setToken } from '../../utilities'
+import { URLs } from '../types'
 
-import { URLs } from './types'
+import { tokenReceived } from './authSlice'
 
 // Define a service using a base URL and expected endpoints
 const baseQuery = fetchBaseQuery({
@@ -25,13 +26,14 @@ export const loginApi = createApi({
 
   endpoints: (builder) => ({
     loginUser: builder.mutation<string, LoginDto>({
-      queryFn: async (dto) => {
+      queryFn: async (dto, api) => {
         try {
           const data = await axios.post<LoginDto, string, LoginDto>(
             `${URLs.AUTH}/login`,
             dto,
           )
           setToken(data)
+          api.dispatch(tokenReceived(data))
           return { data }
         } catch (error: any) {
           return { error }

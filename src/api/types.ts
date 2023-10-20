@@ -4,6 +4,17 @@ export enum URLs {
   TASK = 'https://localhost:5002/Task',
 }
 
-export enum TAGTYPES {
+export enum TagTypes {}
 
+export enum FetchStatus {
+  LOADING = 'loading',
+  SUCCEEDED = 'succeeded',
+  FAILED = 'failed',
+  IDLE = 'idle',
+}
+
+export enum SliceNames {
+  AUTH = 'auth',
+  EMPLOYEE = 'employee',
+  TASK = 'task',
 }

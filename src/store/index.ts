@@ -9,7 +9,9 @@ import {
 import { combineReducers } from 'redux'
 import { createReduxHistoryContext } from 'redux-first-history'
 
-import { loginApi } from '../api/loginApi'
+import authSlice from '../api/auth/authSlice'
+import { loginApi } from '../api/auth/loginApi'
+import { SliceNames } from '../api/types'
 
 // Setup redux-first-history
 const { createReduxHistory, routerMiddleware, routerReducer } =
@@ -20,6 +22,7 @@ export const store = configureStore({
     getDefaultMiddleware().concat([loginApi.middleware, routerMiddleware]),
   reducer: combineReducers({
     router: routerReducer,
+    [SliceNames.AUTH]: authSlice,
     [loginApi.reducerPath]: loginApi.reducer,
   }),
 })
