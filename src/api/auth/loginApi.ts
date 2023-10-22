@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import type { IUser, LoginDto, RegisterDto } from '../../interfaces'
 import { getToken, setToken } from '../../utilities'
-import { URLs } from '../types'
+import { ReducerNames, URLs } from '../types'
 
 import { tokenReceived } from './authSlice'
 
@@ -48,7 +48,7 @@ export const loginApi = createApi({
       }),
     }),
   }),
-  reducerPath: 'loginApi',
+  reducerPath: ReducerNames.AuthApi,
   tagTypes: [],
 })
 

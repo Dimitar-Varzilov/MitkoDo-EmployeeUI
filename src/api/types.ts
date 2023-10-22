@@ -13,8 +13,10 @@ export enum FetchStatus {
   IDLE = 'idle',
 }
 
-export enum SliceNames {
-  AUTH = 'auth',
-  EMPLOYEE = 'employee',
-  TASK = 'task',
+export enum ReducerNames {
+  Auth = 'auth',
+  AuthApi = 'authApi',
+  EmployeeApi = 'employeeApi',
+  Router = 'router',
+  TaskApi = 'taskApi',
 }

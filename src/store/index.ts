@@ -11,7 +11,7 @@ import { createReduxHistoryContext } from 'redux-first-history'
 
 import authSlice from '../api/auth/authSlice'
 import { loginApi } from '../api/auth/loginApi'
-import { SliceNames } from '../api/types'
+import { ReducerNames } from '../api/types'
 
 // Setup redux-first-history
 const { createReduxHistory, routerMiddleware, routerReducer } =
@@ -21,9 +21,9 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([loginApi.middleware, routerMiddleware]),
   reducer: combineReducers({
-    router: routerReducer,
-    [SliceNames.AUTH]: authSlice,
-    [loginApi.reducerPath]: loginApi.reducer,
+    [ReducerNames.Auth]: authSlice,
+    [ReducerNames.AuthApi]: loginApi.reducer,
+    [ReducerNames.Router]: routerReducer,
   }),
 })
 

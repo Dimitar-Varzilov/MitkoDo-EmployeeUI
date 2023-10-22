@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { IUser } from '../../interfaces'
 import { type RootState } from '../../store'
 import { getToken } from '../../utilities'
-import { SliceNames } from '../types'
+import { ReducerNames } from '../types'
 
 interface AuthState {
   token: string | null
@@ -16,7 +16,7 @@ const initialState: AuthState = {
 }
 
 export const authSlice = createSlice({
-  name: SliceNames.AUTH,
+  name: ReducerNames.Auth,
   initialState: initialState,
   reducers: {
     logOut: (state) => {
