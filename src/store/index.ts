@@ -9,8 +9,8 @@ import {
 import { combineReducers } from 'redux'
 import { createReduxHistoryContext } from 'redux-first-history'
 
-import authSlice from '../api/auth/authSlice'
 import { authApi } from '../api/auth/authApi'
+import authSlice from '../api/auth/authSlice'
 import { ReducerNames } from '../api/types'
 
 // Setup redux-first-history
