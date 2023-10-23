@@ -10,7 +10,7 @@ import { combineReducers } from 'redux'
 import { createReduxHistoryContext } from 'redux-first-history'
 
 import authSlice from '../api/auth/authSlice'
-import { loginApi } from '../api/auth/loginApi'
+import { authApi } from '../api/auth/authApi'
 import { ReducerNames } from '../api/types'
 
 // Setup redux-first-history
@@ -19,17 +19,17 @@ const { createReduxHistory, routerMiddleware, routerReducer } =
 export const store = configureStore({
   devTools: process.env.NODE_ENV === 'development' ? true : false,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([loginApi.middleware, routerMiddleware]),
+    getDefaultMiddleware().concat([authApi.middleware, routerMiddleware]),
   reducer: combineReducers({
     [ReducerNames.Auth]: authSlice,
-    [ReducerNames.AuthApi]: loginApi.reducer,
+    [ReducerNames.AuthApi]: authApi.reducer,
     [ReducerNames.Router]: routerReducer,
   }),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
-export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch: () => AppDispatch = useDispatch

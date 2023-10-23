@@ -14,6 +14,13 @@ export interface LoginDto {
   password: string
 }
 
+export interface IChangePasswordDto {
+  confirmPassword: string
+  email: string
+  newPassword: string
+  oldPassword: string
+}
+
 export interface IEmployeeData {
   name: string
   employeeId: UUID
