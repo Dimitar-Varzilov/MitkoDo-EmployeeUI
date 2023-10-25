@@ -35,7 +35,7 @@ export const authApi = createApi({
       query: (dto) => ({
         body: dto,
         method: 'POST',
-        url: '/changePassword',
+        url: 'Auth/changePassword',
       }),
     }),
     loginUser: builder.mutation<string, LoginDto>({
@@ -59,7 +59,7 @@ export const authApi = createApi({
       query: (dto) => ({
         body: dto,
         method: 'POST',
-        url: '/register/employee',
+        url: 'Auth/register/employee',
       }),
     }),
   }),
