@@ -6,11 +6,6 @@ export enum URLs {
 
   EMPLOYEE = 'Employee',
 
-export enum FetchStatus {
-  LOADING = 'loading',
-  SUCCEEDED = 'succeeded',
-  FAILED = 'failed',
-  IDLE = 'idle',
 export enum TagIds {
   LIST = 'LIST',
 }
