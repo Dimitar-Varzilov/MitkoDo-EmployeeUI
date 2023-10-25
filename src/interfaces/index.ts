@@ -2,24 +2,27 @@ import { type UUID } from 'crypto'
 
 import type HttpStatusCode from './HttpStatusCode'
 
-export interface RegisterDto {
+interface IBaseUser {
   name: string
-  confirmPassword: string
   email: string
   password: string
+  userId: UUID
 }
 
-export interface LoginDto {
-  email: string
-  password: string
-}
-
-export interface IChangePasswordDto {
+export interface RegisterDto
+  extends Pick<IBaseUser, 'name' | 'email' | 'password'> {
   confirmPassword: string
-  email: string
+}
+
+export interface LoginDto extends Pick<IBaseUser, 'email' | 'password'> {}
+
+export interface IChangePasswordDto extends Pick<IBaseUser, 'email'> {
+  confirmPassword: string
   newPassword: string
   oldPassword: string
 }
+
+export interface IUser extends Pick<IBaseUser, 'userId' | 'email'> {}
 
 export interface IEmployeeData {
   name: string
@@ -59,7 +62,4 @@ export interface ICustomError<T> {
   status: HttpStatusCode
 }
 
-export interface IUser {
-  email: string
-  userId: UUID
 }

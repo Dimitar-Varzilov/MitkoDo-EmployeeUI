@@ -41,10 +41,13 @@ export const authApi = createApi({
     loginUser: builder.mutation<string, LoginDto>({
       queryFn: async (dto, api) => {
         try {
-          const response = await axios.post<string>(`${URLs.AUTH}/login`, dto)
-          if (response.status < 200 || response.status >= 300) {
+          const response = await axios.post<string>(
+            `${URLs.AUTH}Auth/login`,
+            dto,
+          )
+          if (response.status < 200 || response.status >= 300)
             return { error: response.statusText }
-          }
+
           const data = response.data
           setToken(data)
           api.dispatch(tokenReceived(data))
