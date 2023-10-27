@@ -36,7 +36,7 @@ export interface ISubtask {
   subTaskId: UUID
 }
 
-export interface ITaskByEmployeeIdDto {
+export interface IToDo {
   title: string
   description: string
   dueDate: Date

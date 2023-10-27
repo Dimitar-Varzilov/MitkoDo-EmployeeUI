@@ -2,20 +2,14 @@ import { type UUID } from 'crypto'
 
 import React, { createContext, useState } from 'react'
 
-import type {
-  ICustomError,
-  IEmployeeData,
-  ITaskByEmployeeIdDto,
-  LoginDto,
-  RegisterDto,
-} from '../interfaces'
+import type { IEmployeeData, IToDo, LoginDto, RegisterDto } from '../interfaces'
 import { getToken, removeToken, setToken } from '../utilities'
 
 interface AppContextType {
   clearState: () => void
-  data: ITaskByEmployeeIdDto[]
+  data: IToDo[]
   employeeData: IEmployeeData
-  error?: ICustomError<any>
+  error?: Error
   fetchEmployeeData: () => Promise<void>
   fetchEmployeeTasks: () => Promise<void>
   isLoading: boolean
@@ -90,7 +84,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       console.log(error)
       setState((prev) => ({
         ...prev,
-        error: error as ICustomError<LoginDto>,
+        error,
         isLoggedIn: false,
       }))
     } finally {
@@ -136,7 +130,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
           Authorization: tokenHeader,
         },
       })
-      const data: ITaskByEmployeeIdDto[] = await response.json()
+      const data: IToDo[] = await response.json()
       setState((prev) => ({
         ...prev,
         data: data,
