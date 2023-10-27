@@ -1,7 +1,5 @@
 import { type UUID } from 'crypto'
 
-import type HttpStatusCode from './HttpStatusCode'
-
 interface IBaseUser {
   name: string
   email: string
@@ -52,14 +50,6 @@ enum ToDoStatusEnum {
   Running,
   Completed,
   Uncompleted,
-}
-
-export interface ICustomError<T> {
-  title: string
-  errors: {
-    [key in keyof T]: string
-  }
-  status: HttpStatusCode
 }
 
 }
