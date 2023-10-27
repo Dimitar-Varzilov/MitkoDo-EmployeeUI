@@ -1,30 +1,45 @@
-import { type FormEventHandler, useEffect, useState } from 'react'
+import { type FormEventHandler, useMemo, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { useAppContext } from '../context'
-import type { ISubtask } from '../interfaces'
+import {
+  useGetEmployeeToDosQuery,
+  useUploadNoteAndImagesMutation,
+} from '../api/toDoApi'
+import type { ISubtask, IUploadNoteAndPicturesDto } from '../interfaces'
 
 const Subtask = () => {
   const { subTaskId } = useParams()
-  const { data, uploadImages } = useAppContext()
-  const [subTask, setSubtask] = useState<ISubtask>()
+  const { data = [] } = useGetEmployeeToDosQuery()
+  const [uploadImagesAndNote] = useUploadNoteAndImagesMutation()
+  const idsRef = useRef<
+    Partial<Pick<IUploadNoteAndPicturesDto, 'subTaskId' | 'todoId'>>
+  >({})
+  const subTask = useMemo(() => {
+    let result: ISubtask | undefined
 
-  useEffect(() => {
     data.forEach((t) =>
       t.subTasks.forEach((s) => {
         if (s.subTaskId === subTaskId) {
-          setSubtask(s)
-          return true
+          result = s
+          idsRef.current.subTaskId = s.subTaskId
+          idsRef.current.todoId = t.todoId
         }
       }),
     )
-  }, [])
+    return result
+  }, [data, subTaskId])
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault()
     event.stopPropagation()
+    if (!idsRef.current.todoId || !idsRef.current.subTaskId) return
     const formData = new FormData(event.currentTarget)
-    uploadImages(formData, subTask?.subTaskId!)
+    const dto: IUploadNoteAndPicturesDto = {
+      formData,
+      subTaskId: idsRef.current.subTaskId,
+      todoId: idsRef.current.todoId,
+    }
+    uploadImagesAndNote(dto)
   }
 
   return (

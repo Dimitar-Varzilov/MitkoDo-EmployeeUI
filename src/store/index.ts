@@ -12,6 +12,7 @@ import { createReduxHistoryContext } from 'redux-first-history'
 import { authApi } from '../api/auth/authApi'
 import authSlice from '../api/auth/authSlice'
 import { employeeApi } from '../api/employeeApi'
+import { toDoApi } from '../api/toDoApi'
 import { ReducerNames } from '../api/types'
 
 // Setup redux-first-history
@@ -20,13 +21,17 @@ const { createReduxHistory, routerMiddleware, routerReducer } =
 export const store = configureStore({
   devTools: process.env.NODE_ENV === 'development' ? true : false,
   middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat([
       authApi.middleware,
       employeeApi.middleware,
+      toDoApi.middleware,
       routerMiddleware,
+    ]),
   reducer: combineReducers({
     [ReducerNames.Auth]: authSlice,
     [ReducerNames.AuthApi]: authApi.reducer,
     [ReducerNames.EmployeeApi]: employeeApi.reducer,
+    [ReducerNames.ToDoApi]: toDoApi.reducer,
     [ReducerNames.Router]: routerReducer,
   }),
 })

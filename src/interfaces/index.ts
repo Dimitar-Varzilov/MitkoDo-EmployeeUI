@@ -52,4 +52,8 @@ enum ToDoStatusEnum {
   Uncompleted,
 }
 
+export interface IUploadNoteAndPicturesDto
+  extends Pick<IToDo, 'todoId'>,
+    Pick<ISubtask, 'subTaskId'> {
+  formData: FormData
 }

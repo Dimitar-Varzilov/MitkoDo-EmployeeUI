@@ -1,10 +1,13 @@
 export enum URLs {
-  TASK = 'https://localhost:5002/Task',
   AUTH = 'https://localhost:5000/',
   EMPLOYEE = 'https://localhost:5001/',
+  TASK = 'https://localhost:5002/',
 }
 
+export enum TagTypes {
+  TODO = 'ToDo',
   EMPLOYEE = 'Employee',
+}
 
 export enum TagIds {
   LIST = 'LIST',
@@ -15,5 +18,5 @@ export enum ReducerNames {
   AuthApi = 'authApi',
   EmployeeApi = 'employeeApi',
   Router = 'router',
-  TaskApi = 'taskApi',
+  ToDoApi = 'toDoApi',
 }
