@@ -4,11 +4,9 @@ import { Outlet, useNavigate } from 'react-router-dom'
 
 import { logOut } from '../api/auth/authSlice'
 import Spinner from '../components/Spinner'
-import { useAppContext } from '../context'
 import { useAppDispatch, useAppSelector } from '../store'
 
 const Wrapper: FC = () => {
-  const { error, isLoading } = useAppContext()
   const { isLogged } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -22,14 +20,12 @@ const Wrapper: FC = () => {
     navigate('/')
   }
 
-  // useEffect(() => {
-  //   if (!isLogged) {
-  //     navigate('/')
-  //   }
-  // }, [isLogged])
+  useEffect(() => {
+    if (!isLogged) {
+      navigate('/')
+    }
+  }, [isLogged])
 
-  if (isLoading) return <Spinner />
-  if (error) return <p>{error.title}</p>
   return (
     <>
       {isLogged && (

@@ -5,17 +5,13 @@ import type { UUID } from 'crypto'
 import { type FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppContext } from '../context'
+import { useGetEmployeeDataQuery } from '../api/employeeApi'
+import { useGetEmployeeToDosQuery } from '../api/toDoApi'
 
 const Main: FC = () => {
-  const { data, employeeData, fetchEmployeeData, fetchEmployeeTasks } =
-    useAppContext()
+  const { data: employeeData } = useGetEmployeeDataQuery()
+  const { data: toDos = [] } = useGetEmployeeToDosQuery()
   const navigate = useNavigate()
-
-  const handleFetchEmployeeData = () => {
-    fetchEmployeeData()
-    fetchEmployeeTasks()
-  }
 
   const handleTaskClick = (id: UUID) => {
     navigate(`/todo/${id}`)
@@ -24,14 +20,11 @@ const Main: FC = () => {
   return (
     <div>
       <h1 className="text-4xl">MitkoDo</h1>
-      <div>{employeeData.name}</div>
+      <div>{employeeData?.name}</div>
       {new Date().toLocaleDateString()}
-      <div>
-        <button onClick={handleFetchEmployeeData}>Fetch data</button>
-      </div>
       <hr />
       <div>
-        {data.map((todo) => (
+        {toDos.map((todo) => (
           <div
             className="hover:cursor-pointer"
             key={todo.todoId}

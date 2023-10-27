@@ -2,17 +2,23 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import type { UUID } from 'crypto'
 
+import { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { useAppContext } from '../context'
+import { useGetEmployeeToDosQuery } from '../api/toDoApi'
 
 const Todo = () => {
   const { todoId } = useParams()
-  const { data } = useAppContext()
-  const todo = data.find((t) => t.todoId === todoId)
+  const { data = [] } = useGetEmployeeToDosQuery()
+  const todo = useMemo(
+    () => data.find((t) => t.todoId === todoId),
+    [data, todoId],
+  )
+
   const navigate = useNavigate()
   const handleSubTaskClick = (subTaskId: UUID) =>
     navigate(`/subtask/${subTaskId}`, { replace: true })
+
   return (
     <div>
       <h1 className="text-4xl">MitkoDo</h1>
