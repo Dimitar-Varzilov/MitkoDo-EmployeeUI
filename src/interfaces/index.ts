@@ -37,9 +37,9 @@ export interface ISubtask {
 export interface IToDo {
   title: string
   description: string
-  dueDate: Date
+  dueDate: string
   isComplete: boolean
-  startDate: Date
+  startDate: string
   status: ToDoStatusEnum
   subTasks: ISubtask[]
   todoId: UUID

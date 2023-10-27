@@ -3,7 +3,7 @@ import { type UUID } from 'crypto'
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 
 import type { ISubtask, IToDo, IUploadNoteAndPicturesDto } from '../interfaces'
-import { convertToDosDates, getToken } from '../utilities'
+import { getToken } from '../utilities'
 
 import { ReducerNames, TagIds, TagTypes, URLs } from './types'
 
@@ -36,14 +36,10 @@ export const toDoApi = createApi({
             ]
           : [{ id: TagIds.LIST, type: TagTypes.TODO }],
       query: () => '/Task/byToken',
-      transformResponse: (baseQueryReturnValue: IToDo[]) =>
-        convertToDosDates(baseQueryReturnValue),
     }),
     getToDoById: builder.query<IToDo, UUID>({
       providesTags: (result, error, id) => [{ id, type: TagTypes.TODO }],
       query: (todoId) => `/Task/${todoId}`,
-      transformResponse: (baseQueryReturnValue: IToDo) =>
-        convertToDosDates([baseQueryReturnValue])[0],
     }),
     uploadNoteAndImages: builder.mutation<ISubtask, IUploadNoteAndPicturesDto>({
       invalidatesTags: (result, error, args) => [
