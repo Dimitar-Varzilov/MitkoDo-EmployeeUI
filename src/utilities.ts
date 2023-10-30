@@ -9,3 +9,6 @@ export const setToken = (token: string) => {
 export const removeToken = () => {
   localStorage.removeItem('token')
 }
+
+export const passwordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\d\sa-zA-Z.,]).{8,}$/

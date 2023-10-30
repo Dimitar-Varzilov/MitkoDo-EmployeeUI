@@ -5,14 +5,16 @@ import {
   type FormEventHandler,
   type ChangeEventHandler,
 } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { useLoginUserMutation } from '../api/auth/authApi'
 import type { LoginDto } from '../interfaces'
+import { useAppSelector } from '../store'
+import { passwordRegex } from '../utilities'
 
 const Login: FC = () => {
+  const { isLogged } = useAppSelector((state) => state.auth)
   const [loginUser] = useLoginUserMutation()
-  const navigate = useNavigate()
   const [state, setState] = useState<LoginDto>({
     email: '',
     password: '',
@@ -24,9 +26,10 @@ const Login: FC = () => {
     e.preventDefault()
     e.stopPropagation()
     loginUser(state)
-
-    navigate('/main')
   }
+
+  if (isLogged) return <Navigate to="/main" />
+
   return (
     <div>
       <h1 className="font-extrabold text-4xl">MitkoDo</h1>
@@ -38,6 +41,7 @@ const Login: FC = () => {
           name="email"
           value={state.email}
           onChange={handleChange}
+          required
         />
 
         <label htmlFor="pass">Password</label>
@@ -47,6 +51,8 @@ const Login: FC = () => {
           name="password"
           value={state.password}
           onChange={handleChange}
+          required
+          pattern={passwordRegex.source}
         />
 
         <button className="button-primary" type="submit">
